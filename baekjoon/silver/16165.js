@@ -1,31 +1,31 @@
 const inputs = require('fs').readFileSync('16165.txt').toString().split('\n');
 
-let groupCount = inputs[0].split(' ')[0];
-let quizCount = inputs[0].split(' ')[1];
+let n = inputs[0].split('')[0];
+let m = inputs[0].split('')[2];
 
-let memberCount = 0,
-  groupName = '';
-let data = {};
-for (let i = 1; i < inputs.length; i++) {
-  if (groupCount >= 0) {
-    if (!isNaN(inputs[i])) {
-      memberCount = parseInt(inputs[i]);
-      continue;
-    }
-    if (memberCount) {
-      data[groupName].push(inputs[i]);
-      memberCount--;
-      continue;
-    }
-    if (!isNaN(inputs[i + 1])) {
-      groupName = inputs[i];
-      data[groupName] = [];
-    }
-    groupCount--;
-    // if (groupCount === 0 && memberCount === 0) groupCount = -1;
-  } else {
-    console.log(inputs[i]);
+let groupInfo = new Map();
+let member = new Map();
+
+let index = 1;
+for (let i = 0; i < n; i++) {
+  const memberNumber = Number(inputs[index + 1]);
+  groupInfo.set(inputs[index], inputs[index + 1]);
+
+  for (let j = 0; j < memberNumber; j++) {
+    member.set(inputs[index + 2 + j], inputs[index]);
   }
+  index += 2 + memberNumber;
 }
+const sortedMember = new Map([...member.entries()].sort());
 
-console.log(data);
+for (let i = 0; i < m; i++) {
+  if (inputs[index + 1] == 1) {
+    console.log(member.get(inputs[index]));
+    index += 2;
+    continue;
+  }
+  for (let [person, group] of sortedMember) {
+    if (inputs[index] === group) console.log(person);
+  }
+  index += 2;
+}
