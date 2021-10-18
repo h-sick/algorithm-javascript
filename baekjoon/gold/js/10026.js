@@ -1,3 +1,4 @@
+// 적록색약
 const inputs = require('fs')
   .readFileSync('../text/10026.txt')
   .toString()
