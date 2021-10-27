@@ -1,3 +1,5 @@
+// 설탕 배달
+
 let sugar = +require('fs')
   .readFileSync('../text/2839.txt')
   .toString()
