@@ -33,7 +33,7 @@ while (queue.length && !arrived) {
         visited[k] = current;
         break;
       }
-      if (visited[newPoint] !== -1) continue;
+      if (visited < 0 || visited > 100000 || visited[newPoint] !== -1) continue;
       visited[newPoint] = current;
       queue.push(newPoint);
     }
