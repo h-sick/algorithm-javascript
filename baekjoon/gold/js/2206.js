@@ -47,6 +47,54 @@ function bfs() {
 }
 console.log(bfs());
 
+// const inputs = require('fs')
+//   .readFileSync(process.platform === 'linux' ? 'dev/stdin' : '../text/2206.txt')
+//   .toString()
+//   .split('\n');
+// const n = Number(inputs[0][0]);
+// const m = Number(inputs[0][2]);
+
+// let map = Array.from(Array(n), () => Array(m));
+// for (let i = 0; i < n; i++) {
+//   for (let j = 0; j < m; j++) {
+//     map[i][j] = Number(inputs[i + 1][j]);
+//   }
+// }
+
+// function bfs() {
+//   let dists = Array.from({ length: n }, () =>
+//     Array(m)
+//       .fill(0)
+//       .map((_) => [0, 0])
+//   );
+//   const dx = [1, 0, -1, 0];
+//   const dy = [0, 1, 0, -1];
+
+//   let distance = 1;
+//   let queue = [];
+//   queue.push([0, 0, 0]);
+//   while (queue.length) {
+//     const queueSize = queue.length;
+//     for (let i = 0; i < queueSize; i++) {
+//       const [x, y, crush] = queue.shift();
+//       dists[x][y][crush] = distance;
+//       if (x === n - 1 && y === m - 1) return dists[n - 1][m - 1][1];
+//       for (let j = 0; j < 4; j++) {
+//         const [nx, ny] = [x + dx[j], y + dy[j]];
+//         if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
+//           if (map[nx][ny] === 0 && dists[nx][ny][0] === 0)
+//             queue.push([nx, ny, crush]);
+//           if (map[nx][ny] === 1 && crush === 0 && dists[nx][ny][1] === 0)
+//             queue.push([nx, ny, 1]);
+//         }
+//       }
+//     }
+//     distance++;
+//   }
+//   return -1;
+// }
+// console.log(bfs());
+
 ///////////////////////////////////////////////
 // const k = 1;
 // const dx = [0, 0, 1, -1];
