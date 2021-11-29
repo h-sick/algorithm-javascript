@@ -28,7 +28,7 @@ for (let i = 1; i <= n; i++) {
 while (queue.length) {
   const from = queue.shift();
   for (const [to, count] of graph[from]) {
-    for (let i = 1; i <= to; i++) {
+    for (let i = 1; i <= n; i++) {
       dp[i][to] += dp[i][from] * count;
     }
     indegrees[to]--;
@@ -37,5 +37,5 @@ while (queue.length) {
 }
 
 for (let i = 1; i <= n; i++) {
-  if (dp[i][n]) console.log(`${i} ${dp[i][n]}`);
+  if (dp[i][n]) console.log(i, dp[i][n]);
 }
