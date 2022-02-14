@@ -21,25 +21,22 @@ if (string.length < n) {
   return console.log(0);
 }
 
-const charSet = new Set();
+const map = new Map();
 
 let max = 0;
 let left = 0;
 for (let right = 0; right < string.length; right++) {
-  charSet.add(string[right]);
-  if (charSet.size > n) {
-    charSet.delete(string[left]);
+  map.set(string[right], (map.get(string[right]) || 0) + 1);
+  if (map.size > n) {
+    while (map.size > n) {
+      const count = map.get(string[left]);
+      map.set(string[left], count - 1);
 
-    if (n === 1) {
-      left = right;
-      continue;
+      if (count === 1) {
+        map.delete(string[left]);
+      }
+      left += 1;
     }
-
-    left = right - 1;
-    while (string[right - 1] === string[left]) {
-      left -= 1;
-    }
-    left += 1;
   }
   max = Math.max(max, right - left + 1);
 }
