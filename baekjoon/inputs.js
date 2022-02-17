@@ -9,4 +9,5 @@ const inputs = require('fs')
         )
   )
   .toString()
+  .trim()
   .split('\n');
