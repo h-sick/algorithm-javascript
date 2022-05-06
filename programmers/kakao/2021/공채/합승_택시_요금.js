@@ -1,5 +1,7 @@
 function solution(n, s, a, b, fares) {
-  const dp = Array.from({ length: n + 1 }, () => Array(n + 1).fill(100000));
+  const dp = Array.from({ length: n + 1 }, () =>
+    Array(n + 1).fill(Number.MAX_SAFE_INTEGER)
+  );
 
   for (let i = 1; i <= n; i++) dp[i][i] = 0;
   for (const [a, b, c] of fares) {
