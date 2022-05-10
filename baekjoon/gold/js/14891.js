@@ -1,3 +1,5 @@
+// 톱니바퀴
+
 const path = require('path');
 const inputs = require('fs')
   .readFileSync(
