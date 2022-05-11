@@ -1,3 +1,5 @@
+// 인구이동
+
 const path = require('path');
 const inputs = require('fs')
   .readFileSync(
