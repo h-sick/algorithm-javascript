@@ -32,7 +32,6 @@ function solution(n, times) {
 
   while (left <= right) {
     const mid = Math.floor((left + right) / 2);
-    console.log({ left, right, mid });
 
     let pass = 0;
     for (const time of times) {
