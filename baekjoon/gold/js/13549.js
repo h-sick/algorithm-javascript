@@ -1,3 +1,5 @@
+// 술래잡기 3
+
 const path = require('path');
 const inputs = require('fs')
   .readFileSync(
