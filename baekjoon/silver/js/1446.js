@@ -17,7 +17,7 @@ const inputs = require('fs')
 const [n, d] = inputs[0].split(' ').map(Number);
 
 const shortCuts = [];
-for (let i = 1; i <= 1 + n; i++) {
+for (let i = 1; i <= n; i++) {
   const [from, to, length] = inputs[i].split(' ').map(Number);
   if (to <= d) {
     shortCuts.push([from, to, length]);
