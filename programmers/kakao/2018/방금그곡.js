@@ -10,29 +10,34 @@ function solution(m, musicinfos) {
     title: '',
   };
 
-  const changeTitle = ({ playTime, title }) => {
-    answer.playTime = playTime;
-    answer.title = title;
-  };
-
   for (const musicinfo of musicinfos) {
-    let [startTime, endTime, title, music] = musicinfo.split(',');
+    const [startTime, endTime, title, code] = musicinfo.split(',');
 
     const playTime = calcTimeDiff(startTime, endTime);
-    if (music.length < playTime) {
-      music = music.repeat(Math.ceil(playTime / music.length));
-    }
-    music = music.slice(0, playTime);
+    const codes = code.match(/[A-Z]#?/g);
 
-    // if (new RegExp(`${m}[^#?]`).test(music)) {
-    const index = music.indexOf(m);
-    if (index > -1 && music[index + m.length] !== '#') {
-      if (!answer.title) {
-        changeTitle({ playTime, title });
-        continue;
+    let melody = code.repeat(Math.floor(playTime / codes.length));
+    melody += codes.slice(0, playTime % codes.length).join('');
+
+    let index = melody.indexOf(m);
+    if (index === -1) continue;
+    while (index !== -1) {
+      if (melody[index + m.length] !== '#') {
+        if (!answer.title || playTime > answer.playTime) {
+          answer.playTime = playTime;
+          answer.title = title;
+        }
+        break;
       }
-      if (playTime > answer.playTime) changeTitle({ playTime, title });
+      index = melody.indexOf(m, index + 1);
     }
+
+    // if (new RegExp(`.*(${m})[^#]*$`).test(melody)) {
+    //   if (!answer.title || playTime > answer.playTime) {
+    //     answer.playTime = playTime;
+    //     answer.title = title;
+    //   }
+    // }
   }
   return answer.title ? answer.title : '(None)';
 }
@@ -49,3 +54,34 @@ console.log(
 console.log(
   solution('ABC', ['12:00,12:14,HELLO,C#DEFGAB', '13:00,13:05,WORLD,ABCDEF'])
 ); // 	"WORLD"
+
+// function solution(m, musicinfos) {
+//   const arr = musicinfos.map(mi => {
+//     const [start, end, title, code] = mi.split(',');
+//     const hour = end.slice(0, 2) - start.slice(0, 2);
+//     const minute = end.slice(3) - start.slice(3);
+//     const runtime = 60 * hour + minute;
+
+//     const codeArr = code.match(/[A-Z]#?/g);
+//     let stream = code.repeat(Math.floor(runtime / codeArr.length));
+//     stream += codeArr.slice(0, runtime % codeArr.length).join('');
+//     console.log({ stream });
+//     return [title, runtime, stream];
+//   });
+
+//   const answer = arr.filter(([_, __, stream]) => {
+//     let i = stream.indexOf(m);
+//     if (i === -1) return false;
+//     while (i !== -1) {
+//       if (stream[i + m.length] !== '#') return true;
+//       i = stream.indexOf(m, i + 1);
+//     }
+//   });
+//   if (!answer.length) return '(None)';
+
+//   answer.sort((a, b) => {
+//     if (a[1] === b[1]) return 0;
+//     return b[1] - a[1];
+//   });
+//   return answer[0][0];
+// }
