@@ -25,14 +25,11 @@ const games = inputs.slice(0, 4).map(input =>
     )
 );
 
-let finished = false;
 const match = Array.from({ length: 6 }, () => Array(3).fill(0));
 const result = Array(4).fill(0);
 
-const team1 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
-const team2 = [1, 2, 3, 4, 5, 2, 3, 4, 5, 3, 4, 5, 4, 5, 5];
-
-const dfs = round => {
+let finished = false;
+const dfs = (round, t1, t2) => {
   if (finished) return;
   if (round === 15) {
     for (let k = 0; k < 4; k++) {
@@ -57,26 +54,24 @@ const dfs = round => {
     return;
   }
 
-  const [t1, t2] = [team1[round], team2[round]];
-
   match[t1][0]++;
   match[t2][2]++;
-  dfs(round + 1);
+  dfs(round + 1, t2 === 5 ? t1 + 1 : t1, t2 === 5 ? t1 + 2 : t2 + 1);
   match[t1][0]--;
   match[t2][2]--;
 
   match[t1][2]++;
   match[t2][0]++;
-  dfs(round + 1);
+  dfs(round + 1, t2 === 5 ? t1 + 1 : t1, t2 === 5 ? t1 + 2 : t2 + 1);
   match[t1][2]--;
   match[t2][0]--;
 
   match[t1][1]++;
   match[t2][1]++;
-  dfs(round + 1);
+  dfs(round + 1, t2 === 5 ? t1 + 1 : t1, t2 === 5 ? t1 + 2 : t2 + 1);
   match[t1][1]--;
   match[t2][1]--;
 };
 
-dfs(0, 1, 0);
+dfs(0, 0, 1);
 console.log(result.join(' '));
