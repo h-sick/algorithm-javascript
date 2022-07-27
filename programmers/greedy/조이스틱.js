@@ -1,34 +1,24 @@
 function solution(name) {
-  const arr = [0];
-  let answer = 0;
+  const { length } = name;
+  let upDownCount = 0;
+  let leftRightCountList = [length - 1];
 
-  for (let i = 0; i < name.length; i++) {
-    if (name[i] === 'A') {
-      if (i === 0) arr.push(countA(name) - 1);
-      else if (name[i - 1] !== 'A') {
-        arr.push(countA(name.slice(i)) - (i - 1));
-      }
-      answer += 1;
-    } else answer += upDownCount(name[i]) + 1;
+  for (const char of name) upDownCount += minUpOrDownCount(char);
+  for (let startOfA = 0; startOfA < length; startOfA++) {
+    let endOfA = startOfA + 1;
+    while (endOfA < length && name[endOfA] === 'A') endOfA++;
+    const [moveToStartOfA, moveToEndOfA] = [startOfA, length - endOfA];
+    leftRightCountList.push(moveToStartOfA * 2 + moveToEndOfA);
+    leftRightCountList.push(moveToEndOfA * 2 + moveToStartOfA);
   }
-  return answer - Math.max(...arr) - 1;
+  return upDownCount + Math.min(...leftRightCountList);
 }
 
-const upDownCount = char => {
-  const alpabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  return alpabet.indexOf(char) < 13
-    ? alpabet.indexOf(char)
-    : 26 - alpabet.indexOf(char);
-};
-
-const countA = name => {
-  let count = 0;
-  for (const char of name) {
-    if (char !== 'A') break;
-    count += 1;
-  }
-  return count;
-};
+function minUpOrDownCount(destination) {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const index = alphabet.indexOf(destination);
+  return Math.min(index, alphabet.length - index);
+}
 
 console.log(solution('JEROEN')); // 56
 console.log(solution('JAN')); // 23
