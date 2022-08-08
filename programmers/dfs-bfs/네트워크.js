@@ -1,22 +1,22 @@
 function solution(n, computers) {
-  const visited = Array(n).fill(0);
+  const visited = Array(n).fill(false);
 
-  const visitNodes = from => {
-    visited[from] = 1;
-    for (let to = 0; to < n; to++) {
-      if (computers[from][to] === 1 && !visited[to]) {
-        visitNodes(to);
+  const visitNodes = (start) => {
+    visited[start] = true;
+    visited.forEach((_, next) => {
+      if (computers[start][next] && !visited[next]) {
+        visitNodes(next);
       }
-    }
+    });
   };
 
   let count = 0;
-  for (let i = 0; i < n; i++) {
-    if (!visited[i]) {
-      visitNodes(i);
+  visited.forEach((_, index) => {
+    if (!visited[index]) {
+      visitNodes(index);
       count += 1;
     }
-  }
+  });
   return count;
 }
 
