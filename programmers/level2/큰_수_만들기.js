@@ -2,7 +2,7 @@ function solution(number, k) {
   const answer = [];
   for (let num of number) {
     while (k > 0 && answer[answer.length - 1] < num) {
-      answer.pop(num);
+      answer.pop();
       k -= 1;
     }
     answer.push(num);
