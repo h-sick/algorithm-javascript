@@ -1,37 +1,11 @@
-// function solution(n, times) {
-//   times.sort((a, b) => a - b);
-
-//   let left = times[0];
-//   let right = times[times.length - 1] * n;
-
-//   let minTime = right;
-//   while (left <= right) {
-//     const mid = Math.floor((left + right) / 2);
-//     let ablePeopleWhileMid = 0;
-//     for (const time of times) {
-//       ablePeopleWhileMid += Math.floor(mid / time);
-//       if (ablePeopleWhileMid >= n) {
-//         minTime = Math.min(mid, minTime);
-//         break;
-//       }
-//     }
-
-//     if (ablePeopleWhileMid >= n) right = mid - 1;
-//     else left = mid + 1;
-//   }
-//   return minTime;
-// }
-
-console.log(solution(6, [7, 10])); // 28
-
 function solution(n, times) {
   times.sort((a, b) => a - b);
 
-  let [left] = times;
-  let right = times[times.length - 1] * n;
+  let [min] = times;
+  let max = times[times.length - 1] * n;
 
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
+  while (min <= max) {
+    const mid = Math.floor((min + max) / 2);
 
     let pass = 0;
     for (const time of times) {
@@ -41,8 +15,10 @@ function solution(n, times) {
       }
     }
 
-    if (pass >= n) right = mid - 1;
-    else left = mid + 1;
+    if (pass >= n) max = mid - 1;
+    else min = mid + 1;
   }
-  return left;
+  return min;
 }
+
+console.log(solution(6, [7, 10])); // 28
