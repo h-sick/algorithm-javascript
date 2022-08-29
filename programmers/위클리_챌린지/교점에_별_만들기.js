@@ -1,5 +1,11 @@
 function solution(line) {
   const points = [];
+  let [minX, minY, maxX, maxY] = [
+    Number.MAX_SAFE_INTEGER,
+    Number.MAX_SAFE_INTEGER,
+    Number.MIN_SAFE_INTEGER,
+    Number.MIN_SAFE_INTEGER,
+  ];
   for (let i = 0; i < line.length - 1; i++) {
     for (let j = i + 1; j < line.length; j++) {
       const [a, b, e] = line[i];
@@ -13,24 +19,15 @@ function solution(line) {
       const y = (e * c - a * f) / slope;
       if (Number.isInteger(x) && Number.isInteger(y)) {
         points.push([x, y]);
+        [minX, minY, maxX, maxY] = [
+          Math.min(minX, x),
+          Math.min(minY, y),
+          Math.max(maxX, x),
+          Math.max(maxY, y),
+        ];
       }
     }
   }
-
-  const [minX, minY, maxX, maxY] = points.reduce(
-    ([minX, minY, maxX, maxY], [x, y]) => [
-      Math.min(minX, x),
-      Math.min(minY, y),
-      Math.max(maxX, x),
-      Math.max(maxY, y),
-    ],
-    [
-      Number.MAX_SAFE_INTEGER,
-      Number.MAX_SAFE_INTEGER,
-      Number.MIN_SAFE_INTEGER,
-      Number.MIN_SAFE_INTEGER,
-    ]
-  );
 
   const board = Array.from({ length: maxY - minY + 1 }, () =>
     Array(maxX - minX + 1).fill(".")
